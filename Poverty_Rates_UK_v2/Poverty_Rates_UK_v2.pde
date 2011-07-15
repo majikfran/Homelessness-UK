@@ -292,13 +292,7 @@ class sideFactView extends factView
 
   void update()
   {
-    if(this.isOut())
-    {
-      noStroke();
-      fill(aColor, alphaFade);
-      rect(0, 0, maxWidth, height);
-
-    }
+    
     moveX.update();
     width = moveX.value;
 
@@ -328,19 +322,31 @@ class sideFactView extends factView
         int noWholeBlocks = (int)((Float.valueOf(values.get(i).get(12))) / 20);
         float noBlocks = noWholeBlocks + (Float.valueOf(values.get(i).get(12)) - (20 * noWholeBlocks)) / 20.0;
         
-        int displacement = 0;
+        int displacementX = 0;
+        int displacementY = 100;
         for(int e = 0; e < noBlocks - 1; e ++)
         {
           
           if(e % 10 == 0)
-            displacement = 0;
+            displacementX = 0;
           else
-            displacement++;
+            displacementX++;
+            
+           displacementY = ((e / 10) * 25) + 100;
             
           fill(255);
-          rect(displacement * 25 + (20 - (maxWidth - width)), ((e / 10) * 25) + 100, 20, 20);
+          rect(displacementX * 25 + (20 - (maxWidth - width)), displacementY, 20, 20);
+        }    
+        displacementY += 100;
+        
+        for(int  e = 0; e <= 5; e++)
+        {
+          fill(255, 255, 255, 100);
+          rect((20 - (maxWidth - width)), displacementY + (50 * e) + 15, 250, 10);
+          fill(255, 255, 255, 255);
+          text(headers.get(e + 6), (20 - (maxWidth - width)), displacementY + (50 * e));
+          rect((20 - (maxWidth - width)), displacementY + (50 * e) + 15, map(Float.valueOf(values.get(i).get(e + 6)), 0, Float.valueOf(values.get(i).get(12)), 0, 250), 10);
         }
-        text(values.get(i).get(12), 20 - (maxWidth - width), 100);
       }
     }
     
